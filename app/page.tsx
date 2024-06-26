@@ -2,10 +2,21 @@ import CarCard from '@/components/CarCard';
 import CustomFilter from '@/components/CustomFilter';
 import Hero from '@/components/Hero';
 import SearchBar from '@/components/SearchBar';
+import { FilterProps } from '@/types';
 import { fetchCars } from '@/utils';
 
-export default async function Home() {
-	const allCars = await fetchCars();
+export interface HomeProps {
+	searchParams: FilterProps;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+	const allCars = await fetchCars({
+		manufacturer: searchParams.manufacturer || '',
+		year: searchParams.year || 2022,
+		fuel: searchParams.fuel || '',
+		limit: searchParams.limit || 10,
+		model: searchParams.model || '',
+	});
 
 	// console.log(allCars);
 
