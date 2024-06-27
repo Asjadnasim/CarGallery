@@ -1,10 +1,16 @@
-import { CarProps, FilterProps } from '@/types';
+import { CarProps, FilterProps } from '../types';
 
 export async function fetchCars(filters: FilterProps) {
 	const { manufacturer, year, model, limit, fuel } = filters;
 
+	const apiKey = process.env.RAPID_API_KEY;
+
+	if (!apiKey) {
+		throw new Error('RAPID_API_KEY is not defined');
+	}
+
 	const headers = {
-		'x-rapidapi-key': process.env.RAPID_API_KEY,
+		'x-rapidapi-key': apiKey,
 		'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com',
 	};
 
